@@ -13,7 +13,7 @@ const TaskStatus = ({
       {/* Task Status */}
       <div className="py-3 shadow-xl p-2">
         <h2 className="text-2xl font-semibold text-gray-700">Task Status</h2>
-        <p className="text-gray-400">#</p>
+        {/* <p className="text-gray-400">#</p> */}
         <div className="py-3 ">
           {progressCount.map((ticket) => (
             <StatusCard
@@ -30,7 +30,7 @@ const TaskStatus = ({
         <h1 className="md:text-2xl font-semibold text-gray-700">
           Resolved Task List
         </h1>
-        <p>No task resolved yet.</p>
+      
         {resolvedCount.map((ticket) => (
           <ResolvedTaskCard
             handleResolvedTask={handleResolvedTask}
