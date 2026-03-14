@@ -60,5 +60,108 @@ const [counts, setCounts] = useState(0);
 State changes cause the component to re-render.
 
  - What is the useState hook, and how does it work?
- - How can you share state between components in React?
- - How is event handling done in React?
+
+ *useState is a React Hook that lets functional component manage state*
+ #### Syntax:
+ ```
+ javaScript
+ const [state, setState] = useState(initialValue);
+ ```
+ #### example:
+ ```
+ javaScript:
+ import {useState} from "react";
+
+ function Counter(){
+  const [count, setCount] = useState(0);
+
+  return(
+    <div>
+    <p>{count}</p>
+    <button onClick={()=>setCount(count + 1)}>Increase</button>
+    </div>
+  );
+ }
+ ```
+    #### How it works
+    1. useState(0) sets the initial value to 0
+    2. count stores the current value
+    3. setCount() updates the value
+    4. When state changes, React re-renders the component
+
+- How can you share state between components in React?
+
+ *The most common way is Lifting State Up*
+
+  1. Lift State Up(Most common)
+   
+   *Move the shared state to the closest common parent*
+   #### Example:
+
+   ```
+   javaScript
+
+   function Parent() {
+    const [count, setCount] = useState(0);
+
+    return (
+      <>
+      <ChildA count ={count} />
+      <ChildB setCount ={setCount} />
+      </>
+
+    );
+   }
+   ```
+
+    1. Parents owns the state
+    2. Children receive the  props
+
+2. Context API (for global state)
+
+*Used when many components need the same data*
+
+#### Exampel: 
+
+```
+javaScript
+
+const ThemeContext = React.createContext()
+```
+
+3. State Management Libraries
+
+*Used in large applications*
+  1. Redux
+  2. Zustand
+  3. Recoil
+
+
+- How is event handling done in React?
+
+*React handles events using camelCase event names and functions*
+
+#### Example:
+
+```
+javaScript
+
+function Button(){
+
+  function handleClick(){
+    alert("Button clicked")
+  }
+
+  return <button onClick={handleClick}></button>
+}
+```
+
+#### Event with parameters
+
+```
+javaScript
+
+<button onClick={()=> handleClick("Jhon")}>
+Click
+</button>
+```
