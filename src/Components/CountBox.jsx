@@ -1,17 +1,30 @@
 import React from "react";
 import Container from "../Container";
 
-const CountBox = () => {
+const CountBox = ({ progressIssueTotal, resolvedIssueTotal }) => {
   return (
     <Container>
       <div className="grid md:grid-cols-2 gap-[20px] my-[50px]">
-        <div className="rounded-md p-4 text-white h-[150px]  bg-[url('/images/vector1.png')] bg-no-repeat bg-cover  position-center bg-purple-500 flex flex-col justify-center items-center">
-          <h2 className="font-bold md:text-[35px]">In-Progress</h2>
-          <span className="font-semibold md:text-[40px]">0</span>
+        {/* In-Progress */}
+        <div
+          className={`rounded-md p-4 text-white h-[150px]  bg-[url('/images/vector1.png')] bg-no-repeat bg-cover  position-center bg-purple-500 flex flex-col justify-center items-center`}
+          style={{ backgroundSize: "100% 100%" }}
+        >
+          
+          <h2 className="font-bold md:text-[35px]">In-Progress count</h2>
+          <span className="font-semibold md:text-[40px]">
+            {progressIssueTotal}
+          </span>
         </div>
-        <div className="rounded-md p-4 text-white h-[150px] bg-[url('/images/vector1.png')] bg-no-repeat bg-cover  position-center bg-green-500  flex flex-col justify-center items-center">
-          <h2 className="font-bold md:text-[35px]">Resolved</h2>
-          <span className="font-semibold md:text-[40px]">0</span>
+        {/* Resolved */}
+        <div
+          className={`rounded-md p-4 text-white h-[150px] bg-[url('/images/vector1.png')] bg-no-repeat bg-cover  position-center bg-green-500  flex flex-col justify-center items-center`}
+          style={{ backgroundSize: "100% 100%" }}
+        >
+          <h2 className="font-bold md:text-[35px]">Resolved Count</h2>
+          <span className="font-semibold md:text-[40px]">
+            {resolvedIssueTotal}
+          </span>
         </div>
       </div>
     </Container>

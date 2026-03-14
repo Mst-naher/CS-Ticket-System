@@ -1,54 +1,83 @@
-import  { use } from 'react';
-import Container from '../Container';
-import Issue from './Issue';
-import TaskStatus from './TaskStatus';
+import { use, useState } from "react";
+import Container from "../Container";
+import IssueList from "./IssueList";
+import TaskStatus from "./TaskStatus";
+import CountBox from "./CountBox";
+// import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
-const IssuesManagement = ({fetchPromise}) => {
-  
-  const issueData = use(fetchPromise)
-      console.log(issueData);
+const IssuesManagement = ({ fetchPromise }) => {
+  const data = use(fetchPromise);
+  // console.log(issues);
+ const [tickets, setTickets] = useState(data);
 
-//       createdAt
-// : 
-// "2024-01-20"
-// customer
-// : 
-// "Sophia Taylor"
-// description
-// : 
-// "Customer requested a refund two weeks ago but has not received the amount yet."
-// priority
-// : 
-// "MEDIUM PRIORITY"
-// status
-// : 
-// "In-Progress"
-// ticketId
-// : 
-// "#1006"
-// title
-// : 
-// "Refund Not Processed
+  const [progressCount, setProgressCount] = useState([]);
+  const [resolvedCount, setResolvedCount] = useState([]);
+
+  const handleStatusCard = (ticket) => {
+    console.log("status card is clicked", ticket);
+       toast.success("Task is progressing !!")
+    // 1.resolved Task er vitore ticket k dhukabo
+
+    const newResolvedCount = [...resolvedCount, ticket];
+    setResolvedCount(newResolvedCount);
+
+    // 2.status Task er vitore theke ticket k remove korbo
+    const remaining = progressCount.filter(
+      (item) => item.ticketId !== ticket.ticketId,
+    );
+    
+   setProgressCount(remaining);
+
+   // 3.tickets list theke ekta kore ticket remove korbo
+   const remainingTickets = tickets.filter(item => item.ticketId !== ticket.ticketId)
+   setTickets(remainingTickets)
+  };
+  // console.log("status card is clicked", resolvedCount);
+
+const handleResolvedTask = (ticket) => {
+  console.log("Task is resolved", ticket);
+  toast.success("Task is Solved !!")
+
+  const remaining = resolvedCount.filter(resolve=> resolve.ticketId !== ticket.ticketId);
+  setResolvedCount(remaining);
+};
+
+
+  const handleCustomerTicket = (ticket) => {
+    console.log(ticket);
+    // age check korbo progress ticket ache kina
+    const isExist = progressCount.find(
+      (item) => item.ticketId == ticket.ticketId,
+    );
+    console.log(isExist);
+    if (isExist) {
+      toast("Already Exist this ticket !!");
+      return;
+    }
+
+    const newProgressCount = [...progressCount, ticket];
+    setProgressCount(newProgressCount);
+  };
+
+  // console.log("issue card is clicked", progressCount);
 
   return (
     <Container>
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {/* column 1 */}
-        <div className=" sm:col-span-1  md:col-span-2 ">
-          <h2 className="p-1 md:text-xl">Customer Tickets</h2>
-          <div className=" grid grid-cols-2 justify-between items-center gap-2 p-4">
-            {/* cards */}
-            {issueData.map((issue) => (
-              <Issue key={issue.ticketId} issue={issue}></Issue>
-            ))}
-          </div>
-          <div className=" "></div>
-        </div>
-        {/* column 2 */}
-        <div className="w-[full] p-4">
-         
-          <TaskStatus></TaskStatus>
-        </div>
+      <CountBox
+        resolvedIssueTotal={resolvedCount.length}
+        progressIssueTotal={progressCount.length}
+      ></CountBox>
+      <div>
+        <IssueList
+          handleResolvedTask={handleResolvedTask}
+          resolvedCount={resolvedCount}
+          handleStatusCard={handleStatusCard}
+          progressCount={progressCount}
+          handleCustomerTicket={handleCustomerTicket}
+          tickets={tickets}
+        ></IssueList>
       </div>
     </Container>
   );

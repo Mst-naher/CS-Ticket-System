@@ -1,19 +1,23 @@
 import React from 'react';
 
-const Issue = ({ issue }) => {
-  console.log(issue)
-  const { title, description, ticketId, priority, status, customer, createdAt } = 
-    issue
-  
-   
-
+const IssueCard = ({ ticket, handleCustomerTicket }) => {
+  const {
+    title,
+    description,
+    ticketId,
+    priority,
+    status,
+    customer,
+    createdAt,
+  } = ticket;
   return (
     <div>
-      <div className="shadow-md  bg-amber-100  flex flex-col  w-[full] py-6 p-2">
+      <div
+        className="card shadow-md  bg-amber-100  flex flex-col  w-[full] py-6 p-2"
+        onClick={() => handleCustomerTicket(ticket)}
+      >
         <div className="flex justify-between  mb-2">
-          <h1 className="md:text-xl md:font-semibold text-gray-600">
-            {title}
-          </h1>
+          <h1 className="md:text-xl md:font-semibold text-gray-600">{title}</h1>
           <button className="bg-green-100 px-3 text-green-800 rounded-full text-sm">
             {status}
           </button>
@@ -46,4 +50,4 @@ const Issue = ({ issue }) => {
   );
 };
 
-export default Issue;
+export default IssueCard;
