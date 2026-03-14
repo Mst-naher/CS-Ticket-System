@@ -32,6 +32,7 @@
      }
      ```
  - What is the difference between State and Props?
+
 | Feature | Props | State  |
 |--------|--------|-------|
 | Meaning  | Data passed from parent component | Data managed inside a component
